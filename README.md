@@ -1,320 +1,521 @@
-# ArgoSB Python版本
+# 🚀 网络工具集合
 
-## 简介
-
-这是ArgoSB脚本的Python版本，无需root权限，**完全适用于普通用户**。所有文件安装在用户主目录下的`.agsb`隐藏文件夹中，不会影响系统目录。脚本使用Python 3，**仅使用Python标准库**，无需安装额外依赖。
-
-## 使用方法
-
-### 免费vps免root一键安装hysteria2
-```bash
-cd ~ && curl -fsSL https://raw.githubusercontent.com/zhumengkang/agsb/main/hysteria2-v1.py | python3 -
-```
-
-### 免费vps免root一键安装vmess
-```bash
-cd ~ && curl -fsSL https://raw.githubusercontent.com/zhumengkang/agsb/main/agsb-v2.py | python3 - install --uuid b1ebd5fc-9170-45d4-9887-a39c9fc65298 --port 49999 --agk CF-token --domain 自己的域名
-```
-
-### 固定域名一键安装命令
-```bash
-cd ~ && curl -fsSL https://raw.githubusercontent.com/zhumengkang/agsb/main/agsb-v2.py | python3 - install --uuid b1ebd5fc-9170-45d4-9887-a39c9fc65298 --port 49999 --agk CF-token --domain 自己的域名
-```
-或者
-```bash
-cd ~ && wget https://raw.githubusercontent.com/zhumengkang/agsb/main/agsb.py && python3 agsb.py install --uuid 25bd7521-eed2-45a1-a50a-97e432552aca --port 49999 --agk CF-token --domain 自己的域名
-```
-
-### 一键安装命令
-```bash
-cd ~ && wget https://raw.githubusercontent.com/zhumengkang/agsb/main/agsb.py && python3 agsb.py
-```
-或者
-```bash
-cd ~ && curl -fsSL https://raw.githubusercontent.com/zhumengkang/agsb/main/agsb.py | python3 -
-```
-
-### 安装
-```bash
-python3 agsb.py install
-```
-首次运行会自动安装并配置服务。安装完成后会创建`~/bin/agsb`命令链接，可直接使用`agsb`命令操作。
-
-### 启动服务
-```bash
-agsb
-# 或
-python3 agsb.py
-```
-
-### 查看服务状态
-```bash
-agsb status
-# 或
-python3 agsb.py status
-```
-
-### 查看单行节点列表
-```bash
-agsb cat
-# 或
-python3 agsb.py cat
-```
-
-### 升级脚本
-```bash
-agsb update
-# 或
-python3 agsb.py update
-```
-
-### 卸载服务
-```bash
-agsb uninstall
-# 或
-python3 agsb.py del
-```
-
-## 环境变量设置
-可以通过环境变量自定义配置：
-
-- `vmpt`: 指定vmess端口
-- `uuid`: 指定UUID
-- `agn`: 指定Argo固定域名
-- `agk`: 指定Argo授权密钥
-
-例如：
-```bash
-export vmpt=10000
-export uuid=your-uuid
-python3 agsb.py
-```
-
-## 安装目录
-所有文件安装在用户主目录下的`.agsb`隐藏文件夹内：
-- `~/.agsb/sing-box`: sing-box可执行文件
-- `~/.agsb/cloudflared`: cloudflared可执行文件
-- `~/.agsb/sb.json`: sing-box配置文件
-- `~/.agsb/list.txt`: 节点信息列表
-- `~/.agsb/allnodes.txt`: 单行节点列表文件
-
-## 优点
-1. **无需root权限**，普通用户即可使用
-2. 安装在用户主目录下的隐藏文件夹，不影响系统目录
-3. 使用Python 3编写，语法更现代
-4. **仅使用标准库**，无需安装任何额外依赖
-5. 保留了原shell脚本的所有核心功能
-6. 自动创建用户目录下的命令链接，使用更方便
-7. 更友好的错误处理和调试信息
-8. 提供直接输出节点功能，方便复制使用
-
-## 兼容性提示
-- 需要Python 3环境，无需安装额外的依赖
-- 所有文件都安装在用户目录下，不影响系统目录
-- 安装完成后会在`~/bin`目录创建命令链接，如需使用，请确保该目录在PATH环境变量中
+**一键部署多种网络工具的综合解决方案**
 
 ---
 
-# Glitch 网站保活脚本
+## 📑 目录
 
-## 简介
+- [🛡️ Hysteria2 一键部署工具](#-hysteria2-一键部署工具)
+  - [✨ 核心特性](#-核心特性)
+  - [🚀 快速开始](#-快速开始)
+  - [🔧 技术架构](#-技术架构)
+  - [🔥 防火墙配置](#-防火墙配置)
+  - [📊 功能详解](#-功能详解)
+  - [📥 配置文件下载](#-配置文件下载)
+  - [💻 客户端支持](#-客户端支持)
+  - [⚠️ 重要说明](#️-重要说明)
 
-这是一个用于保持 Glitch 项目在线的脚本，通过模拟真人浏览行为定期访问指定网站，防止 Glitch 项目因长时间无访问而休眠。脚本模拟真实用户访问行为，支持多种浏览器和设备的 User-Agent，自动处理缓存和 ETag，减少服务器负担。
+- [📦 ArgoSB Python版本](#-argosb-python版本)
+  - [📋 使用方法](#-使用方法)
+  - [🔧 配置选项](#-配置选项)
+  - [📁 文件结构](#-文件结构)
+  - [✅ 优势特点](#-优势特点)
 
-## 主要功能
+- [🌐 Glitch 网站保活脚本](#-glitch-网站保活脚本)
+  - [🔥 主要功能](#-主要功能)
+  - [💾 安装与使用](#-安装与使用)
+  - [⚙️ 参数说明](#️-参数说明)
+  - [🔄 工作原理](#-工作原理)
+  - [🖥️ 后台运行](#️-后台运行)
 
-- 模拟真人浏览行为，防止被识别为机器人
-- 支持自定义访问间隔时间
-- 智能会话管理，模拟真实用户访问模式
-- 支持多种浏览器和设备的 User-Agent
-- 自动处理缓存和 ETag，减少服务器负担
-- 完整的日志记录功能
-- 支持通过命令行参数自定义配置
+- [🐧 Ubuntu Proot 环境](#-ubuntu-proot-环境)
+  - [⚡ 一键安装](#-一键安装)
+  - [🎯 功能特点](#-功能特点)
+  - [🔄 环境管理](#-环境管理)
+  - [📦 预装软件](#-预装软件)
 
-## 安装与使用
+- [👨‍💻 作者信息](#-作者信息)
+- [📄 许可证](#-许可证)
 
-### 安装依赖
+---
 
-脚本仅依赖 Python 标准库和 `requests` 库：
+## 🛡️ Hysteria2 一键部署工具
+
+> **防墙增强版 - 专业的Hysteria2部署脚本，支持多端口配置、Salamander混淆、nginx Web伪装和BBR优化**
+
+### ✨ 核心特性
+
+| 特性 | 描述 |
+|------|------|
+| 🎯 **一键部署** | 单命令完成所有配置 |
+| 🔄 **多端口配置** | 支持生成100个不同端口的节点配置 |
+| 🔒 **Salamander混淆** | 自动生成混淆密码，防DPI检测 |
+| 🌐 **nginx Web伪装** | TCP端口显示正常企业网站 |
+| ⚡ **BBR优化** | 启用BBR拥塞控制算法，提升网络性能 |
+| 🔒 **自动HTTPS证书** | 支持Let's Encrypt自动申请和续期 |
+| 🔧 **完整清理** | 删除时自动清理所有配置 |
+| 📥 **配置下载** | 自动生成并提供多平台配置文件下载 |
+
+### 🚀 快速开始
+
+#### 📥 下载脚本
+
+```bash
+# 方式一：wget下载
+wget https://raw.githubusercontent.com/zhumengkang/agsb/main/nginx-hysteria2.py
+
+# 方式二：curl下载  
+curl -O https://raw.githubusercontent.com/zhumengkang/agsb/main/nginx-hysteria2.py
+```
+
+#### ⚡ 最简部署
+
+```bash
+# 一键部署 (推荐)
+python3 nginx-hysteria2.py install --simple
+```
+
+#### 🏆 高性能部署
+
+```bash
+# 高位端口 + BBR优化 + 完整防护
+python3 nginx-hysteria2.py install --simple --port-range 28888-29999 --enable-bbr
+```
+
+#### 🌟 完整配置示例
+
+```bash
+# 最强配置：真实域名 + 端口跳跃 + BBR优化
+python3 nginx-hysteria2.py install --simple \
+  --domain yourdomain.com \
+  --use-real-cert \
+  --email your@email.com \
+  --port-range 28888-29999 \
+  --enable-bbr
+```
+
+### 📋 基础命令
+
+| 命令 | 功能 |
+|------|------|
+| `python3 nginx-hysteria2.py help` | 查看帮助 |
+| `python3 nginx-hysteria2.py install --simple` | 简化一键部署 |
+| `python3 nginx-hysteria2.py status` | 查看状态 |
+| `python3 nginx-hysteria2.py client` | 显示客户端配置 |
+| `python3 nginx-hysteria2.py del` | 完全删除 |
+| `python3 nginx-hysteria2.py fix` | 修复配置 |
+
+### 🔧 技术架构
+
+#### 🌟 Hysteria2 核心特性
+
+**基于UDP/QUIC协议**
+- ✅ Hysteria2本质是基于UDP协议的代理工具
+- ✅ 使用QUIC协议实现快速、可靠的数据传输
+- ❌ **不支持TCP转发**，所有流量都通过UDP承载
+
+**支持的功能**
+- ✅ **多端口配置**: 生成100个不同端口的节点配置
+- ✅ **Salamander混淆**: 防DPI深度包检测
+- ✅ **HTTP/3伪装**: 流量伪装成正常HTTP/3访问
+- ❌ **FakeTCP**: Hysteria2不支持此功能
+
+#### 🔄 多端口配置原理
+
+```
+客户端连接不同端口 (如: 28888, 28889, 28890...)
+         ↓
+    iptables DNAT转发
+         ↓
+  Hysteria2监听端口 (如: 443 UDP)
+```
+
+#### 🛡️ 双端口伪装策略
+
+```
+TCP 443端口 → nginx → 显示正常企业网站
+UDP 443端口 → Hysteria2 → 代理服务
+```
+
+#### 🔒 防护层次
+
+1. **多端口配置**: 客户端可选择不同端口，防单一端口封锁
+2. **Salamander混淆**: 加密流量特征，防DPI检测
+3. **HTTP/3伪装**: 流量看起来像正常HTTP/3网站访问
+4. **nginx Web伪装**: TCP端口显示正常企业网站
+5. **BBR优化**: 提升UDP传输性能和稳定性
+
+### 🔥 防火墙配置
+
+#### 🎯 默认配置 (--simple)
+
+```bash
+# UDP端口范围 (Hysteria2多端口)
+sudo ufw allow 1024:1074/udp
+
+# TCP端口 (nginx Web伪装)
+sudo ufw allow 443/tcp
+sudo ufw allow 80/tcp
+```
+
+#### ⚙️ 自定义端口范围
+
+```bash
+# 如果使用 --port-range 28888-29999
+sudo ufw allow 28888:29999/udp  # UDP端口范围
+sudo ufw allow 443/tcp          # nginx Web伪装
+sudo ufw allow 80/tcp           # HTTP重定向
+```
+
+#### 📥 配置下载服务端口
+
+```bash
+# 配置文件下载服务（可选）
+sudo ufw allow 8080/tcp
+```
+
+#### ☁️ 云服务器安全组
+
+如果使用云服务器，还需要在安全组中开放：
+
+- **UDP端口范围**: 1024-1074 (或自定义范围)
+- **TCP 443**: HTTPS/nginx
+- **TCP 80**: HTTP重定向
+- **TCP 8080**: 配置下载服务（可选）
+
+### 📊 功能详解
+
+#### 🔄 多端口配置 (Multi-Port Setup)
+
+**原理**: 使用iptables DNAT规则将端口范围内的流量转发到Hysteria2监听端口
+
+**优势**:
+- ✅ 防止单一端口被封锁
+- ✅ 增加检测和封锁难度
+- ✅ 提高连接稳定性
+- ✅ 客户端可选择不同端口
+
+**配置**: `--port-range 起始端口-结束端口`
+
+#### 🔒 Salamander混淆
+
+**原理**: Hysteria2内置的流量混淆算法，加密流量特征
+
+**优势**:
+- ✅ 防止DPI深度包检测
+- ✅ 隐藏Hysteria2协议特征
+- ✅ 降低被识别和封锁的概率
+
+**配置**: 自动生成16位随机密码
+
+#### 🌐 HTTP/3伪装
+
+**原理**: 将Hysteria2流量伪装成正常的HTTP/3网站访问
+
+**优势**:
+- ✅ 流量看起来像正常网站访问
+- ✅ 降低被监控系统识别的概率
+- ✅ 提高隐蔽性
+
+#### 🖥️ nginx Web伪装
+
+**原理**: 在TCP端口部署nginx，显示正常企业网站
+
+**优势**:
+- ✅ TCP端口访问显示正常网站
+- ✅ 增加迷惑性
+- ✅ 双重伪装策略
+
+#### ⚡ BBR优化
+
+**原理**: 启用BBR拥塞控制算法，优化UDP传输性能
+
+**优势**:
+- ✅ 提升网络传输速度
+- ✅ 降低延迟
+- ✅ 优化UDP连接稳定性
+
+### 📁 部署后文件结构
+
+```
+~/.hysteria2/
+├── cert/                      # SSL证书目录
+│   ├── cert.pem              # 证书文件
+│   └── key.pem               # 私钥文件
+├── config/                   # 配置文件目录
+│   └── config.json           # Hysteria2主配置
+├── logs/                     # 日志目录
+│   └── hysteria.log          # 运行日志
+├── web/                      # Web伪装文件
+│   ├── index.html            # 伪装网站首页
+│   ├── robots.txt            # 搜索引擎文件
+│   └── sitemap.xml           # 站点地图
+├── configs/                  # 客户端配置目录
+│   ├── v2rayn-subscription.txt    # v2rayN多端口订阅
+│   ├── multi-port-links.txt       # 多端口配置明文
+│   ├── clash.yaml                 # Clash多端口配置
+│   └── hysteria2.json             # 官方客户端配置
+├── start.sh                  # 启动脚本
+├── stop.sh                   # 停止脚本
+└── hysteria                  # Hysteria2二进制文件
+```
+
+### 📥 配置文件下载
+
+部署完成后，脚本会自动启动HTTP服务器提供配置文件下载：
+
+| 配置类型 | 下载地址 | 说明 |
+|----------|----------|------|
+| **v2rayN多端口订阅** | `http://你的服务器IP:8080/v2rayn-subscription.txt` | Base64编码订阅文件，包含100个节点 |
+| **多端口配置明文** | `http://你的服务器IP:8080/multi-port-links.txt` | 明文链接，便于查看和手动导入 |
+| **Clash多端口配置** | `http://你的服务器IP:8080/clash.yaml` | Clash Meta配置，包含多个端口节点 |
+| **官方客户端配置** | `http://你的服务器IP:8080/hysteria2.json` | Hysteria2官方客户端JSON配置 |
+
+### 💻 客户端支持
+
+| 平台 | 客户端 | 多端口支持 | 推荐度 | 使用方法 |
+|------|--------|------------|--------|----------|
+| **Windows** | v2rayN | ✅ | ⭐⭐⭐⭐⭐ | 导入多端口订阅或手动添加节点 |
+| **Windows** | Hysteria2官方 | ✅ | ⭐⭐⭐⭐⭐ | 使用官方客户端配置 |
+| **Android** | v2rayNG | ✅ | ⭐⭐⭐⭐ | 导入订阅或手动添加节点 |
+| **Android** | Hysteria2官方 | ✅ | ⭐⭐⭐⭐⭐ | 使用官方客户端配置 |
+| **iOS** | Shadowrocket | ✅ | ⭐⭐⭐⭐ | 手动添加节点 |
+| **macOS** | ClashX Meta | ✅ | ⭐⭐⭐⭐ | 导入Clash配置 |
+| **Linux** | Hysteria2官方 | ✅ | ⭐⭐⭐⭐⭐ | 使用官方客户端配置 |
+
+#### 📱 客户端配置指南
+
+**🔹 v2rayN用户:**
+- **多端口订阅**: 下载v2rayN多端口订阅 → 添加订阅链接
+- **手动导入**: 下载多端口配置明文 → 复制链接到v2rayN
+
+**🔹 Clash Meta用户:**
+- **多端口配置**: 下载Clash多端口配置，包含多个端口节点
+
+**🔹 官方客户端用户:**
+- **官方配置**: 使用官方客户端配置文件
+
+### ⚠️ 重要说明
+
+#### 🎯 技术要点
+
+1. **Hysteria2基于UDP协议**: 不是TCP转发，所有流量通过UDP承载
+2. **多端口配置**: 提供100个不同端口的节点，用户可手动选择切换
+3. **配置兼容性**: 生成的配置兼容多种客户端
+4. **防火墙要求**: 必须开放UDP端口，TCP端口用于Web伪装
+
+#### 🔧 故障排除
+
+| 问题 | 解决方案 |
+|------|----------|
+| **连接失败** | 检查UDP端口是否开放 |
+| **多端口不生效** | 确认使用正确的配置文件 |
+| **Web伪装无效** | 检查nginx配置和TCP端口 |
+| **混淆连接失败** | 确认客户端混淆密码正确 |
+
+---
+
+## 📦 ArgoSB Python版本
+
+> **无需root权限的Python版本，完全适用于普通用户**
+
+### 📋 使用方法
+
+#### ⚡ 一键安装命令
+
+```bash
+# 免费vps免root一键安装hysteria2
+cd ~ && curl -fsSL https://raw.githubusercontent.com/zhumengkang/agsb/main/hysteria2-v1.py | python3 -
+
+# 免费vps免root一键安装vmess
+cd ~ && curl -fsSL https://raw.githubusercontent.com/zhumengkang/agsb/main/agsb-v2.py | python3 - install --uuid b1ebd5fc-9170-45d4-9887-a39c9fc65298 --port 49999 --agk CF-token --domain 自己的域名
+
+# wget方式下载
+cd ~ && wget https://raw.githubusercontent.com/zhumengkang/agsb/main/agsb.py && python3 agsb.py install
+
+# curl方式下载
+cd ~ && curl -fsSL https://raw.githubusercontent.com/zhumengkang/agsb/main/agsb.py | python3 -
+```
+
+#### 🎯 基础操作
+
+| 命令 | 功能 |
+|------|------|
+| `python3 agsb.py install` | 安装服务 |
+| `agsb` / `python3 agsb.py` | 启动服务 |
+| `agsb status` | 查看服务状态 |
+| `agsb cat` | 查看单行节点列表 |
+| `agsb update` | 升级脚本 |
+| `agsb uninstall` / `agsb del` | 卸载服务 |
+
+### 🔧 配置选项
+
+#### 🌍 环境变量设置
+
+```bash
+export vmpt=10000              # 指定vmess端口
+export uuid=your-uuid          # 指定UUID
+export agn=your-domain         # 指定Argo固定域名
+export agk=your-token          # 指定Argo授权密钥
+
+python3 agsb.py
+```
+
+#### 💻 固定域名安装
+
+```bash
+cd ~ && curl -fsSL https://raw.githubusercontent.com/zhumengkang/agsb/main/agsb-v2.py | python3 - install --uuid b1ebd5fc-9170-45d4-9887-a39c9fc65298 --port 49999 --agk CF-token --domain 自己的域名
+```
+
+### 📁 文件结构
+
+```
+~/.agsb/                       # 用户主目录下的隐藏文件夹
+├── sing-box                   # sing-box可执行文件
+├── cloudflared               # cloudflared可执行文件
+├── sb.json                   # sing-box配置文件
+├── list.txt                  # 节点信息列表
+└── allnodes.txt              # 单行节点列表文件
+
+~/bin/                        # 命令链接目录
+└── agsb                      # 命令链接
+```
+
+### ✅ 优势特点
+
+| 特性 | 描述 |
+|------|------|
+| 🔐 **无需root权限** | 普通用户即可使用 |
+| 📁 **用户目录安装** | 安装在用户主目录下的隐藏文件夹 |
+| 🐍 **现代Python语法** | 使用Python 3编写，语法更现代 |
+| 📦 **仅使用标准库** | 无需安装任何额外依赖 |
+| 🔄 **保留核心功能** | 保留了原shell脚本的所有功能 |
+| 🔗 **便捷命令链接** | 自动创建用户目录下的命令链接 |
+| 🛠️ **友好错误处理** | 更友好的错误处理和调试信息 |
+| 📋 **节点输出功能** | 提供直接输出节点功能，方便复制使用 |
+
+### 🔧 兼容性提示
+
+- ✅ 需要Python 3环境，无需安装额外依赖
+- ✅ 所有文件都安装在用户目录下，不影响系统目录
+- ✅ 安装完成后会在`~/bin`目录创建命令链接
+- ⚠️ 请确保`~/bin`目录在PATH环境变量中
+
+---
+
+## 🌐 Glitch 网站保活脚本
+
+> **模拟真人浏览行为，防止 Glitch 项目休眠**
+
+### 🔥 主要功能
+
+| 功能 | 描述 |
+|------|------|
+| 🤖 **模拟真人浏览** | 防止被识别为机器人 |
+| ⏰ **自定义访问间隔** | 支持自定义访问间隔时间 |
+| 🧠 **智能会话管理** | 模拟真实用户访问模式 |
+| 🌐 **多User-Agent支持** | 支持多种浏览器和设备 |
+| 💾 **自动缓存处理** | 自动处理缓存和ETag，减少服务器负担 |
+| 📝 **完整日志记录** | 完整的日志记录功能 |
+| 🔧 **命令行参数** | 支持通过命令行参数自定义配置 |
+
+### 💾 安装与使用
+
+#### 📦 安装依赖
 
 ```bash
 pip install requests
 ```
 
-### 使用 curl 一键安装并运行
+#### ⚡ 一键安装并运行
 
 ```bash
-# 下载并运行（默认URL）
+# 使用curl - 默认URL
 curl -fsSL https://raw.githubusercontent.com/zhumengkang/agsb/main/cron-glitch.py | python3 -
 
-# 下载并指定URL运行
+# 使用curl - 指定URL
 curl -fsSL https://raw.githubusercontent.com/zhumengkang/agsb/main/cron-glitch.py | python3 - -u https://your-project-name.glitch.me
 
-# 下载并指定URL和访问间隔
+# 使用curl - 指定URL和访问间隔
 curl -fsSL https://raw.githubusercontent.com/zhumengkang/agsb/main/cron-glitch.py | python3 - --url https://your-project-name.glitch.me --interval 30-180
-
-# 一键下载并在后台运行（默认URL）- 使用脚本内置后台功能
-curl -fsSL https://raw.githubusercontent.com/zhumengkang/agsb/main/cron-glitch.py -o glitch.py && python3 glitch.py -b
-
-# 一键下载并在后台运行（指定URL）- 使用脚本内置后台功能
-curl -fsSL https://raw.githubusercontent.com/zhumengkang/agsb/main/cron-glitch.py -o glitch.py && python3 glitch.py -b -u https://your-project-name.glitch.me
-
-# 查看日志
-tail -f glitch.log
 ```
 
-### 使用 wget 下载并运行
+#### 📥 下载方式
 
 ```bash
-# 下载脚本
+# 使用wget下载
 wget https://raw.githubusercontent.com/zhumengkang/agsb/main/cron-glitch.py -O glitch.py
 
-# 运行脚本（默认URL）
+# 使用curl下载
+curl -fsSL https://raw.githubusercontent.com/zhumengkang/agsb/main/cron-glitch.py -o glitch.py
+```
+
+#### 🎯 基本使用
+
+```bash
+# 默认设置运行
 python3 glitch.py
 
-# 指定URL运行
+# 指定目标URL
 python3 glitch.py -u https://your-project-name.glitch.me
 
-# 指定URL和访问间隔
-python3 glitch.py --url https://your-project-name.glitch.me --interval 30-180
+# 自定义访问间隔（30-180秒）
+python3 glitch.py -i 30-180
 
-# 一键下载并在后台运行（默认URL）- 使用脚本内置后台功能
-wget https://raw.githubusercontent.com/zhumengkang/agsb/main/cron-glitch.py -O glitch.py && python3 glitch.py -b
-
-# 一键下载并在后台运行（指定URL）- 使用脚本内置后台功能
-wget https://raw.githubusercontent.com/zhumengkang/agsb/main/cron-glitch.py -O glitch.py && python3 glitch.py -b -u https://your-project-name.glitch.me
-
-# 查看日志
-tail -f glitch.log
+# 显示详细日志
+python3 glitch.py -v
 ```
 
-### 基本用法
+### ⚙️ 参数说明
 
-```bash
-python glitch.py
-```
+| 参数 | 长参数 | 描述 | 默认值 |
+|------|--------|------|--------|
+| `-u URL` | `--url URL` | 要访问的目标 URL | `https://seemly-organized-thing.glitch.me/` |
+| `-i INTERVAL` | `--interval INTERVAL` | 请求间隔范围(秒)，格式："最小值-最大值" | `"60-240"` |
+| `-v` | `--verbose` | 显示详细日志 | - |
+| `-b` | `--background` | 在后台运行 | - |
+| `-l` | `--list` | 列出正在运行的实例 | - |
+| `-s` | `--stop` | 停止所有运行的实例 | - |
+| `-d` | `--delete` | 删除指定 URL 的会话记录 | - |
+| `-c` | `--clear-all` | 清除所有会话记录 | - |
 
-这将使用默认设置（访问 https://seemly-organized-thing.glitch.me/ 网站，每 1-4 分钟访问一次）。
+### 🔄 工作原理
 
-### 指定目标 URL
+1. **随机时间间隔**: 在指定的时间间隔内随机选择一个时间点发送请求
+2. **浏览器指纹模拟**: 每次请求都会使用不同的浏览器指纹信息
+3. **会话状态保持**: 会话管理系统保持 Cookie 和会话状态
+4. **ETag缓存支持**: 支持 ETag 缓存机制，减少服务器负担
+5. **人类行为模拟**: 模拟人类浏览行为，如滚动、点击等
 
-```bash
-python glitch.py -u https://your-project-name.glitch.me
-```
+### 🖥️ 后台运行
 
-或者
+#### 🚀 内置后台功能
 
-```bash
-python glitch.py --url https://your-project-name.glitch.me
-```
-
-### 自定义访问间隔
-
-```bash
-python glitch.py -i 30-180
-```
-
-这会将访问间隔设置为 30-180 秒（格式为"最小值-最大值"）。
-
-### 删除特定 URL 的会话记录
-
-```bash
-python glitch.py -u https://your-project-name.glitch.me -d
-```
-
-或者
-
-```bash
-python glitch.py --url https://your-project-name.glitch.me --delete
-```
-
-### 清除所有会话记录
-
-```bash
-python glitch.py -c
-```
-
-或者
-
-```bash
-python glitch.py --clear-all
-```
-
-### 显示详细日志
-
-```bash
-python glitch.py -v
-```
-
-或者
-
-```bash
-python glitch.py --verbose
-```
-
-## 参数说明
-
-| 参数 | 长参数 | 描述 |
-|------|--------|------|
-| `-u URL` | `--url URL` | 要访问的目标 URL（默认: https://seemly-organized-thing.glitch.me/） |
-| `-i INTERVAL` | `--interval INTERVAL` | 请求间隔范围(秒)，格式为"最小值-最大值"（默认: "60-240"） |
-| `-v` | `--verbose` | 显示详细日志 |
-| `-d` | `--delete` | 删除指定 URL 的会话记录和 Cookie |
-| `-c` | `--clear-all` | 清除所有会话记录和 Cookie |
-
-## 工作原理
-
-1. 脚本会在指定的时间间隔内随机选择一个时间点发送请求
-2. 每次请求都会使用不同的浏览器指纹信息，模拟真实用户
-3. 会话管理系统会保持 Cookie 和会话状态，模拟用户持续访问
-4. 支持 ETag 缓存机制，减少服务器负担
-5. 模拟人类浏览行为，如滚动、点击等
-
-## 注意事项
-
-- 脚本会在当前目录创建 `cookies` 文件夹存储会话信息
-- 日志会同时输出到控制台和 `requests.log` 文件
-- 为避免 Glitch 项目休眠，建议将访问间隔设置在 5 分钟以内
-- 使用 Ctrl+C 可以随时中断脚本运行
-
-## 在后台运行
-
-脚本提供了内置的后台运行功能，可以让脚本在终端关闭后继续运行。**不依赖外部的nohup命令**，在各种环境下都能正常工作，包括Glitch平台。
-
-### 使用内置后台功能
+脚本提供了内置的后台运行功能，**不依赖外部的nohup命令**，在各种环境下都能正常工作。
 
 ```bash
 # 在后台运行（默认URL）
-python glitch.py -b
-# 或
-python glitch.py --background
+python3 glitch.py -b
 
 # 在后台运行并指定URL
-python glitch.py -b -u https://your-project-name.glitch.me
-# 或
-python glitch.py --background --url https://your-project-name.glitch.me
+python3 glitch.py -b -u https://your-project-name.glitch.me
 
 # 在后台运行并指定URL和访问间隔
-python glitch.py -b -u https://your-project-name.glitch.me -i 30-180
+python3 glitch.py -b -u https://your-project-name.glitch.me -i 30-180
 ```
 
-### 管理后台进程
+#### 🔧 管理后台进程
 
 ```bash
 # 列出所有正在运行的脚本实例
-python glitch.py -l
-# 或
-python glitch.py --list
+python3 glitch.py -l
 
 # 停止所有正在运行的脚本实例
-python glitch.py -s
-# 或
-python glitch.py --stop
+python3 glitch.py -s
 ```
 
-### 查看日志
-
-后台运行的脚本日志会保存在 `glitch.log` 文件中，可以使用以下命令查看：
+#### 📄 查看日志
 
 ```bash
 # 查看完整日志
@@ -324,144 +525,164 @@ cat glitch.log
 tail -f glitch.log
 ```
 
+#### ⚠️ 注意事项
+
+- 脚本会在当前目录创建 `cookies` 文件夹存储会话信息
+- 日志会同时输出到控制台和 `requests.log` 文件
+- 为避免 Glitch 项目休眠，建议将访问间隔设置在 5 分钟以内
+- 使用 Ctrl+C 可以随时中断脚本运行
+
 ---
 
-# Ubuntu Proot 环境安装脚本
+## 🐧 Ubuntu Proot 环境
 
-在某些环境中，您可能需要一个完整的Ubuntu环境来运行上述ArgoSB脚本。以下是一个无需root权限的Ubuntu Proot环境安装脚本，可以帮助您在任何支持的系统上快速创建一个Ubuntu环境。
+> **无需root权限的完整Ubuntu环境**
 
-## 一键安装命令
+### ⚡ 一键安装
 
 ```bash
+# wget方式
 cd ~ && wget https://raw.githubusercontent.com/zhumengkang/agsb/main/root.sh && chmod +x root.sh && ./root.sh
-```
-## curl一键安装命令Proot
-```bash
+
+# curl方式
 cd ~ && curl -sSL https://raw.githubusercontent.com/zhumengkang/agsb/main/root.sh -o root.sh && chmod +x root.sh && ./root.sh
 ```
-## 基本命令
 
-```bash
-./root.sh          # 安装Ubuntu Proot环境
-./root.sh del      # 删除所有配置和文件
-./root.sh help     # 显示帮助信息
-./start-proot.sh   # 启动Proot环境
-```
+### 🎯 功能特点
 
-## 功能特点
+| 特性 | 描述 |
+|------|------|
+| 🔍 **自动架构检测** | 支持x86_64和aarch64架构 |
+| 🐧 **Ubuntu 20.04基础** | 下载并安装Ubuntu 20.04基础系统 |
+| 🌐 **自动DNS配置** | 自动配置DNS服务器 |
+| 📦 **软件源更新** | 更新软件源为Ubuntu 22.04 (Jammy) |
+| 👤 **用户目录创建** | 自动创建与物理机用户同名的用户目录 |
+| 🛠️ **开发工具安装** | 安装常用开发工具和软件包 |
+| 🎨 **美观界面** | 彩色界面和提示信息 |
+| 🔐 **无需root权限** | 普通用户即可使用 |
+| 🗑️ **一键删除** | 支持一键删除所有配置和文件 |
 
-- 自动检测系统架构（支持x86_64和aarch64）
-- 下载并安装Ubuntu 20.04基础系统
-- 自动配置DNS服务器
-- 更新软件源为Ubuntu 22.04 (Jammy)
-- 自动创建与物理机用户同名的用户目录
-- 安装常用开发工具和软件包
-- 美观的彩色界面和提示信息
-- **无需root权限**，普通用户即可使用
-- 支持一键删除所有配置和文件
+### 🔧 基本命令
 
-## 进入和退出Proot环境
+| 命令 | 功能 |
+|------|------|
+| `./root.sh` | 安装Ubuntu Proot环境 |
+| `./root.sh del` | 删除所有配置和文件 |
+| `./root.sh help` | 显示帮助信息 |
+| `./start-proot.sh` | 启动Proot环境 |
 
-### 首次安装
+### 🔄 环境管理
 
-首次安装时，脚本会询问是否立即启动proot环境。如果选择是，将自动进入proot环境，并执行初始化操作（更新软件源、安装软件包等）。
+#### 🚀 进入Proot环境
 
-### 再次进入
+**首次安装**: 安装时会询问是否立即启动proot环境
 
-安装完成后，如果需要再次进入proot环境，可以使用以下命令：
-
+**再次进入**:
 ```bash
 ./start-proot.sh
 ```
 
-### 退出Proot环境
+#### 🚪 退出Proot环境
 
-在proot环境中，输入以下命令即可退出：
-
+在proot环境中执行：
 ```bash
 exit
 ```
 
-### 如何判断是否在Proot环境中
+#### 🔍 环境识别
 
-在proot环境中，命令提示符会显示为`proot-ubuntu:/当前目录$`的形式，并且使用`uname -a`命令会显示Ubuntu系统信息。
+在proot环境中，命令提示符会显示为`proot-ubuntu:/当前目录$`的形式
 
-### 删除Proot环境
-
-如果您想要删除所有配置和文件，可以使用以下命令：
+#### 🗑️ 删除环境
 
 ```bash
 ./root.sh del
 ```
 
-此命令会删除所有生成的文件，但保留`root.sh`和`README.md`文件，以便您可以重新安装。
-
-## 自动安装的软件包
+### 📦 预装软件
 
 脚本会自动安装以下软件包：
 
-- curl, wget, git
-- vim, nano
-- htop, tmux
-- python3, python3-pip
-- nodejs, npm
-- build-essential
-- net-tools
-- zip, unzip
-- sudo
-- locales
-- tree
-- ca-certificates
-- gnupg
-- lsb-release
-- iproute2
-- cron
-- podman
+#### 🔧 基础工具
+- `curl`, `wget`, `git`
+- `vim`, `nano`
+- `zip`, `unzip`
+- `tree`
 
-## 注意事项
+#### 🖥️ 系统工具
+- `htop`, `tmux`
+- `net-tools`
+- `iproute2`
+- `cron`
 
-- 脚本需要在支持的系统架构上运行（x86_64或aarch64）
-- 确保您有足够的磁盘空间
-- 需要网络连接以下载必要的文件
-- 首次运行时会自动下载并安装所需的软件包，这可能需要一些时间
+#### 💻 开发环境
+- `python3`, `python3-pip`
+- `nodejs`, `npm`
+- `build-essential`
 
-## 常见问题解决
+#### 🔒 系统组件
+- `sudo`
+- `locales`
+- `ca-certificates`
+- `gnupg`
+- `lsb-release`
+- `podman`
 
-### 如果proot环境无法正常启动
+### 🔧 常见问题解决
 
-请检查：
+#### ❌ Proot环境无法正常启动
+
+**检查项目**:
 1. 是否有足够的磁盘空间
 2. 是否有网络连接
 3. 系统架构是否受支持
 
-如果仍有问题，可以尝试删除所有配置后重新安装：
+**解决方案**:
 ```bash
 ./root.sh del
 ./root.sh
 ```
 
-### 如果在proot环境中无法访问网络
+#### 🌐 在proot环境中无法访问网络
 
-请检查DNS配置是否正确，可以尝试以下命令：
+**DNS配置修复**:
 ```bash
 echo "nameserver 1.1.1.1" > /etc/resolv.conf
 echo "nameserver 8.8.8.8" >> /etc/resolv.conf
 ```
 
-## 作者信息
+---
 
-- 作者: 康康
-- GitHub: https://github.com/zhumengkang/
-- YouTube: https://www.youtube.com/@康康的V2Ray与Clash
-- Telegram: https://t.me/+WibQp7Mww1k5MmZl
+## 👨‍💻 作者信息
 
-## 许可证
+| 平台 | 链接 |
+|------|------|
+| **作者** | 康康 |
+| **GitHub** | https://github.com/zhumengkang/ |
+| **YouTube** | https://www.youtube.com/@康康的V2Ray与Clash |
+| **Telegram** | https://t.me/+WibQp7Mww1k5MmZl |
 
-本项目基于MIT许可证开源。
+---
 
-## 支持与贡献
+## 📄 许可证
 
-如果您喜欢这个项目，请在GitHub上给我一个Star，或在YouTube上关注我的频道！
-如有问题或建议，欢迎通过GitHub Issues或Telegram群组联系我。
-## 赞助商
+本项目基于 **MIT License** 开源 - 详见 [LICENSE](LICENSE) 文件
+
+---
+
+## 🙏 支持与贡献
+
+- ⭐ 如果您喜欢这个项目，请在GitHub上给我一个Star
+- 📺 欢迎关注我的YouTube频道获取最新教程
+- 💬 如有问题或建议，欢迎通过GitHub Issues或Telegram群组联系我
+- 🤝 欢迎提交Pull Request贡献代码
+
+---
+
+## 🏆 赞助商
+
 [![Powered by DartNode](https://dartnode.com/branding/DN-Open-Source-sm.png)](https://dartnode.com "Powered by DartNode - Free VPS for Open Source")
+
+---
+
+**⚠️ 免责声明**: 此工具仅供学习和技术研究使用，请遵守当地法律法规。
